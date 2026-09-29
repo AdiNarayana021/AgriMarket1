@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AgriMarket – Farmer Market Intelligence</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f3f6f9;--sf:#ffffff;--ink:#0f1f2e;--mut:#55677a;--ln:#dde5ec}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1520;--sf:#132231;--ink:#eaf1f7;--mut:#9fb2c4;--ln:#233649}}
+:root[data-theme=dark]{--bg:#0b1520;--sf:#132231;--ink:#eaf1f7;--mut:#9fb2c4;--ln:#233649}
+html{font-size:clamp(15px,.55vw + 9px,26px);scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 'Inter','Noto Sans','Noto Sans Telugu','Noto Sans Devanagari',system-ui,sans-serif}
+h1,h2,h3{font-family:'DM Serif Display','Noto Sans Telugu','Noto Sans Devanagari',Georgia,sans-serif;margin:0;line-height:1.15}
+h2{font-size:2rem}h3{font-size:1.2rem;margin-bottom:.6rem}
+.scr{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
+.brand{background:linear-gradient(150deg,#0c2d48,#0f5f7a 55%,#0f766e 85%,#b45309);color:#fff;padding:clamp(1.5rem,5vw,4rem);display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.brand h1{font-size:clamp(2.4rem,5vw,4.4rem);font-weight:800}.brand p{font-size:1.15rem;max-width:34ch;opacity:.95}
+.brand .em{font-size:3rem;letter-spacing:.3rem}
+.box{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.5rem,5vw,4rem);max-width:34rem;width:100%;margin:auto}
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.tabs button,.btn{font:600 1rem inherit;font-family:inherit;border:0;border-radius:.8rem;padding:.7rem 1.2rem;cursor:pointer}
+.tabs button{background:var(--sf);color:var(--ink);border:2px solid var(--ln);flex:1}.tabs .on{background:#3730a3;color:#fff;border-color:#3730a3}
+.btn{background:linear-gradient(135deg,#b45309,#f59e0b);color:#fff;box-shadow:0 .4rem 1rem #b4530940}
+.btn.g{background:linear-gradient(135deg,#0f766e,#14b8a6);box-shadow:0 .4rem 1rem #0f766e40}
+.btn.o{background:var(--sf);color:var(--ink);border:2px solid var(--ln);box-shadow:none}
+:focus-visible{outline:3px solid #3730a3;outline-offset:2px}
+label{display:block;font-size:.9rem;color:var(--mut);margin:.7rem 0 .2rem}
+input,select{width:100%;font:inherit;padding:.7rem .9rem;border:2px solid var(--ln);border-radius:.7rem;background:var(--sf);color:var(--ink)}
+.err{color:#be123c;min-height:1.4rem;font-size:.9rem;margin:.5rem 0}
+.lg{display:grid;gap:1rem;margin:1.5rem 0}
+.lg button{display:flex;align-items:center;gap:1rem;font:600 1.5rem inherit;font-family:inherit;padding:1.1rem 1.4rem;border-radius:1rem;border:3px solid var(--ln);background:var(--sf);color:var(--ink);cursor:pointer;text-align:left}
+.lg button.on{border-color:#0f766e;background:#e3f4f2;color:#0b3b37}.lg small{display:block;font-size:.85rem;color:var(--mut);font-weight:400}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:linear-gradient(90deg,#0c2d48,#134e6f);display:flex;align-items:center;gap:.4rem;padding:.6rem 1rem;overflow-x:auto;color:#fff}
+.logo{font:800 1.4rem 'DM Serif Display',sans-serif;margin-right:.8rem;white-space:nowrap}
+header a{padding:.45rem .9rem;border-radius:99px;color:#e6f2ff;cursor:pointer;white-space:nowrap;font-weight:500}
+header a:hover{background:#ffffff30}header a.on{background:#fff;color:#0b3b37}
+header select{width:auto;margin-left:auto;padding:.35rem .6rem;border-radius:99px}
+header .btn{padding:.4rem .9rem;box-shadow:none}
+main{max-width:100rem;margin:0 auto;padding:1.5rem 1rem 4rem}
+.sub{color:var(--mut);margin:.2rem 0 1.2rem}
+.hero{background:linear-gradient(120deg,#0c2d48,#1e5a8a 60%,#0f766e);color:#fff;border-radius:1.5rem;padding:clamp(1.5rem,4vw,3.5rem);margin-bottom:1.2rem}
+.hero h2{font-size:clamp(2rem,4.5vw,3.6rem)}.hero p{max-width:50ch;font-size:1.1rem}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1rem;margin:1rem 0}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:1rem;margin-top:1rem}
+.tile,.kpi{background:linear-gradient(135deg,var(--a),var(--b));color:#fff;border-radius:1.2rem;padding:1.2rem;cursor:pointer;border:0;text-align:left;font:inherit;box-shadow:0 .5rem 1.4rem color-mix(in srgb,var(--a) 35%,transparent)}
+.tile{transition:transform .15s}.tile:hover{transform:translateY(-3px)}
+.tile b,.kpi b{display:block;font:800 1.5rem 'DM Serif Display','Noto Sans Telugu','Noto Sans Devanagari',sans-serif}.kpi{cursor:default}.tile span{font-size:2rem}.kpi small{opacity:.9}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:1.2rem;padding:1.2rem;min-width:0;box-shadow:0 .3rem 1rem #0000000d}
+.br{display:grid;grid-template-columns:7rem 1fr 5.5rem;gap:.6rem;align-items:center;margin:.55rem 0;font-size:.95rem}
+.br i{display:block;height:1rem;border-radius:.5rem;background:linear-gradient(90deg,var(--a),var(--b))}.br b{text-align:right}
+.up{color:#0f766e;font-weight:600}.dn{color:#be123c;font-weight:600}
+.tag{display:inline-block;padding:.1rem .7rem;border-radius:99px;font-size:.8rem;color:#fff;background:#3730a3}.tag.k{background:#0f766e}.tag.r{background:#b45309}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--ln);white-space:nowrap}th{color:var(--mut)}
+.fb{display:flex;flex-wrap:wrap;gap:.8rem;align-items:end;margin:1rem 0}.fb>*{flex:1 1 12rem}.fb .btn{flex:0 0 auto}
+.note{border-left:5px solid #f59e0b;background:color-mix(in srgb,#f59e0b 14%,var(--sf));padding:.6rem 1rem;border-radius:.6rem;font-size:.9rem;margin-top:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}.chip{padding:.35rem .9rem;border-radius:.8rem;background:color-mix(in srgb,var(--a) 16%,var(--sf));border:2px solid var(--a);font-size:.9rem}
+.mk{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.7rem 0;border-bottom:1px solid var(--ln)}
+svg{width:100%;height:auto;display:block}
+@media(max-width:800px){.scr{grid-template-columns:1fr}.brand{padding:2rem 1.5rem}}
+@media(prefers-reduced-motion:reduce){.tile{transition:none}}
+@media print{header{display:none}}
+
+.sway{transform-origin:50px 118px;animation:sway 3.6s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.card,.tile,.kpi,.hero{animation:rise .5s both}
+.br i{transform-origin:left;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+.dr{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.4s ease-out forwards}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;align-items:flex-end;margin-top:1.2rem}
+.row svg{width:clamp(4.5rem,9vw,9rem);height:auto;animation:bob 3s ease-in-out infinite}
+.row svg:nth-child(2n){animation-delay:.6s}.row svg:nth-child(3n){animation-delay:1.2s}
+.cc{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.2rem}
+.cc svg{width:6rem;background:#ffffff26;border-radius:1rem}
+.brand .row{justify-content:flex-start}.brand .row svg{width:clamp(3.5rem,6vw,6rem)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}.dr{stroke-dashoffset:0}}
+h1,h2,h3,.logo,.tile b,.kpi b{font-weight:400;letter-spacing:-.01em}
+.card,.kpi,.tile{border-radius:.9rem}.hero{border-radius:1.1rem}
+.card{box-shadow:0 1px 2px #0f1f2e14,0 8px 24px #0f1f2e0f}
+.pimg{display:block;object-fit:cover;background:var(--ln)}
+.row img{width:clamp(4.5rem,9vw,9rem);aspect-ratio:1;border-radius:50%;border:3px solid #fff;box-shadow:0 6px 18px #0004;animation:bob 3s ease-in-out infinite}
+.row img:nth-child(2n){animation-delay:.6s}
+.brand .row img{width:clamp(3.5rem,6vw,6rem)}
+.cc .pimg{align-self:stretch;width:100%;aspect-ratio:4/3;border-radius:.6rem}
+footer{max-width:100rem;margin:0 auto;padding:1rem;color:var(--mut);font-size:.8rem;border-top:1px solid var(--ln)}
+.seg{margin-left:auto;display:flex;border:1px solid #ffffff66;border-radius:99px;overflow:hidden;flex:none}.seg button{border:0;background:transparent;color:#e6f2ff;padding:.3rem .8rem;cursor:pointer;font:inherit}.seg .on{background:#fff;color:#0c2d48;font-weight:600}header select{margin-left:0}
+</style></head><body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+<script>
+// Translations (en/te/hi), crops (Kharif/Rabi), markets, indicative base prices
+const T={
+en:{home:'Home',dash:'Dashboard',place:'My Place',prices:'Prices',adv:'Advisory',crops:'Crops',out:'Logout',hi:'Namaste',tag:'Prices from your nearby markets, season-wise crop guidance and simple advisories.',useloc:'📍 Use my location',pick:'Or pick your town',near:'Nearby markets',km:'km away',qt:'per quintal',mod:'Modal price today',kh:'Kharif',rb:'Rabi',zd:'Zaid (summer)',sow:'Sowing',har:'Harvest',best:'Best nearby price',season:'Current season',mkt:'Your market',tracked:'Crops tracked',chg:'Change today',movers:'Top movers today',trend:'7-day trend',crop:'Crop',mktL:'Market',all:'All',viewp:'View prices',sample:'Indicative sample prices, not live market rates. Connect the Agmarknet / data.gov.in API for live prices.',kd:'Sown with the monsoon (June–July), harvested from September–October onwards.',rd:'Sown in the cool season (October–December), harvested March–April.',locfail:"Couldn't get your location. Pick your town instead.",locok:'Using your location.',locdef:'Showing markets near Hyderabad. Tap “Use my location” for yours.',far:'No listed market within 300 km. Pick the nearest town.',hv:'Harvest soon',sn:'Sow now or soon',sell:'Selling tip',tips:'General tips',t1:'Test soil before sowing and use certified seed.',t2:'Check the weather forecast before spraying or irrigating.',t3:'Compare prices in 2–3 nearby markets before selling.',t4:'Confirm pesticide and dose with your local KVK or agriculture officer.',none:'Nothing in this window.',go:'Go to',at:'at',start:'Explore'},
+te:{home:'హోమ్',dash:'డాష్‌బోర్డ్',place:'నా ప్రాంతం',prices:'ధరలు',adv:'సలహా',crops:'పంటలు',out:'లాగ్అవుట్',hi:'నమస్కారం',tag:'మీ సమీప మార్కెట్ ధరలు, సీజన్ వారీ పంటల మార్గదర్శకం, సులభమైన సలహాలు.',useloc:'📍 నా స్థానాన్ని ఉపయోగించండి',pick:'లేదా మీ పట్టణాన్ని ఎంచుకోండి',near:'సమీప మార్కెట్లు',km:'కి.మీ దూరం',qt:'క్వింటాలుకు',mod:'నేటి సాధారణ ధర',kh:'ఖరీఫ్',rb:'రబీ',zd:'జైద్ (వేసవి)',sow:'విత్తడం',har:'కోత',best:'సమీపంలో ఉత్తమ ధర',season:'ప్రస్తుత సీజన్',mkt:'మీ మార్కెట్',tracked:'పంటలు',chg:'నేటి మార్పు',movers:'నేటి ప్రధాన మార్పులు',trend:'7 రోజుల ధోరణి',crop:'పంట',mktL:'మార్కెట్',all:'అన్నీ',viewp:'ధరలు చూడండి',sample:'ఇవి సూచనాత్మక నమూనా ధరలు, లైవ్ ధరలు కావు.',kd:'వర్షాకాలంతో (జూన్–జూలై) విత్తి, సెప్టెంబర్–అక్టోబర్ నుంచి కోత.',rd:'శీతాకాలంలో (అక్టోబర్–డిసెంబర్) విత్తి, మార్చి–ఏప్రిల్‌లో కోత.',locfail:'మీ స్థానం దొరకలేదు. దిగువ మీ పట్టణాన్ని ఎంచుకోండి.',locok:'మీ స్థానం ఉపయోగిస్తున్నాం.',locdef:'హైదరాబాద్ సమీప మార్కెట్లు చూపిస్తున్నాం. మీ స్థానం కోసం బటన్ నొక్కండి.',far:'300 కి.మీ లోపు మార్కెట్ లేదు. సమీప పట్టణాన్ని ఎంచుకోండి.',hv:'త్వరలో కోత',sn:'ఇప్పుడు / త్వరలో విత్తడం',sell:'అమ్మకం సూచన',tips:'సాధారణ సూచనలు',t1:'విత్తే ముందు మట్టి పరీక్ష చేయించండి, ధృవీకరించిన విత్తనాలు వాడండి.',t2:'పిచికారీ లేదా నీటి తడికి ముందు వాతావరణ సూచన చూడండి.',t3:'అమ్మే ముందు 2–3 సమీప మార్కెట్లలో ధరలు పోల్చండి.',t4:'మందు, మోతాదు కోసం స్థానిక KVK లేదా వ్యవసాయ అధికారిని సంప్రదించండి.',none:'ఈ కాలంలో ఏమీ లేదు.',go:'వెళ్ళండి',at:'లో',start:'చూడండి'},
+hi:{home:'होम',dash:'डैशबोर्ड',place:'मेरा स्थान',prices:'भाव',adv:'सलाह',crops:'फसलें',out:'लॉगआउट',hi:'नमस्ते',tag:'आपकी नज़दीकी मंडियों के भाव, मौसम के अनुसार फसल जानकारी और आसान सलाह।',useloc:'📍 मेरा स्थान उपयोग करें',pick:'या अपना शहर चुनें',near:'नज़दीकी मंडियाँ',km:'कि.मी. दूर',qt:'प्रति क्विंटल',mod:'आज का मॉडल भाव',kh:'खरीफ',rb:'रबी',zd:'जायद (गर्मी)',sow:'बुवाई',har:'कटाई',best:'नज़दीक सर्वोत्तम भाव',season:'वर्तमान मौसम',mkt:'आपकी मंडी',tracked:'फसलें',chg:'आज का बदलाव',movers:'आज के बड़े बदलाव',trend:'7 दिन का रुझान',crop:'फसल',mktL:'मंडी',all:'सभी',viewp:'भाव देखें',sample:'ये सांकेतिक नमूना भाव हैं, लाइव भाव नहीं।',kd:'मानसून (जून–जुलाई) में बुवाई, सितंबर–अक्टूबर से कटाई।',rd:'सर्दियों (अक्टूबर–दिसंबर) में बुवाई, मार्च–अप्रैल में कटाई।',locfail:'आपका स्थान नहीं मिला। नीचे अपना शहर चुनें।',locok:'आपका स्थान उपयोग हो रहा है।',locdef:'हैदराबाद के पास की मंडियाँ दिख रही हैं। अपने लिए बटन दबाएँ।',far:'300 कि.मी. के भीतर कोई मंडी नहीं। नज़दीकी शहर चुनें।',hv:'जल्द कटाई',sn:'अभी / जल्द बुवाई',sell:'बिक्री सुझाव',tips:'सामान्य सुझाव',t1:'बुवाई से पहले मिट्टी की जाँच करें और प्रमाणित बीज उपयोग करें।',t2:'छिड़काव या सिंचाई से पहले मौसम पूर्वानुमान देखें।',t3:'बेचने से पहले 2–3 नज़दीकी मंडियों के भाव मिलाएँ।',t4:'दवा व मात्रा के लिए स्थानीय KVK या कृषि अधिकारी से पूछें।',none:'इस अवधि में कुछ नहीं।',go:'जाएँ',at:'में',start:'देखें'}};
+// id, [te,hi], season, sow[m1,m2], harvest[m1,m2], base ₹/quintal (indicative), emoji
+const CROPS=[
+['Rice',['వరి','धान'],'K',[6,7],[10,11],2395,'🌾'],['Maize',['మొక్కజొన్న','मक्का'],'K',[6,7],[9,10],2050,'🌽'],['Cotton',['పత్తి','कपास'],'K',[6,7],[10,1],8650,'☁️'],
+['Groundnut',['వేరుశనగ','मूंगफली'],'K',[6,7],[10,11],7350,'🥜'],['Soybean',['సోయాబీన్','सोयाबीन'],'K',[6,7],[9,10],6700,'🫘'],['Red gram',['కంది','अरहर (तूर)'],'K',[6,7],[12,1],7800,'🫛'],
+['Jowar',['జొన్న','ज्वार'],'K',[6,7],[9,10],3400,'🌾'],['Green gram',['పెసర','मूंग'],'K',[6,7],[9,9],8000,'🟢'],['Chilli',['మిరప','मिर्च'],'K',[7,8],[12,3],17750,'🌶️'],
+['Wheat',['గోధుమ','गेहूं'],'R',[10,12],[3,4],2630,'🌾'],['Chickpea',['శనగ','चना'],'R',[10,11],[2,3],5600,'🫘'],['Mustard',['ఆవాలు','सरसों'],'R',[10,10],[2,3],6975,'🌼'],
+['Barley',['బార్లీ','जौ'],'R',[10,11],[3,4],2000,'🌾'],['Lentil',['మసూరు','मसूर'],'R',[10,11],[3,3],6400,'🟤']].map(a=>({id:a[0],n:a[1],s:a[2],sow:a[3],har:a[4],b:a[5],e:a[6]}));
+const MKS=[['Bowenpally, Hyderabad','Telangana',17.47,78.47],['Malakpet, Hyderabad','Telangana',17.37,78.51],['Warangal (Enumamula)','Telangana',17.99,79.6],['Nizamabad','Telangana',18.67,78.09],['Karimnagar','Telangana',18.44,79.13],['Khammam','Telangana',17.25,80.15],['Mahbubnagar','Telangana',16.74,77.99],['Adilabad','Telangana',19.66,78.53],['Nalgonda','Telangana',17.05,79.27],['Siddipet','Telangana',18.1,78.85],['Suryapet','Telangana',17.14,79.62],['Jagtial','Telangana',18.79,78.91],['Guntur','Andhra Pradesh',16.31,80.44],['Vijayawada','Andhra Pradesh',16.51,80.65],['Kurnool','Andhra Pradesh',15.83,78.04],['Tirupati','Andhra Pradesh',13.63,79.42],['Visakhapatnam','Andhra Pradesh',17.69,83.22],['Latur','Maharashtra',18.4,76.56],['Lasalgaon, Nashik','Maharashtra',20.14,74.24],['Bengaluru (Yeshwanthpur)','Karnataka',13.02,77.55],['Chennai (Koyambedu)','Tamil Nadu',13.07,80.19],['Indore','Madhya Pradesh',22.72,75.86],['Jaipur','Rajasthan',26.91,75.79],['Ludhiana','Punjab',30.9,75.86]].map(a=>({n:a[0],st:a[1],la:a[2],lo:a[3]}));
+
+const {useState,useMemo,useEffect,useContext,createContext}=React;
+const html=htm.bind(React.createElement);
+Object.assign(T.en,{lo:'Low',hg:'High'});Object.assign(T.te,{lo:'కనిష్ఠం',hg:'గరిష్ఠం'});Object.assign(T.hi,{lo:'न्यूनतम',hg:'अधिकतम'});
+Object.assign(T.en,{kg:'per kg',uq:'Quintal',uk:'Kg',conv:'1 quintal = 100 kg'});Object.assign(T.te,{kg:'కిలోకు',uq:'క్వింటాల్',uk:'కిలో',conv:'1 క్వింటాల్ = 100 కిలోలు'});Object.assign(T.hi,{kg:'प्रति किलो',uq:'क्विंटल',uk:'किलो',conv:'1 क्विंटल = 100 किलो'});
+const LOC={en:'en-IN',te:'te-IN',hi:'hi-IN'};
+const VER=['Rice','Maize','Cotton','Groundnut','Soybean','Chilli','Wheat','Mustard'];
+const PAL=[['#b45309','#f59e0b'],['#0f766e','#14b8a6'],['#3730a3','#6366f1'],['#be123c','#fb7185'],['#0c4a6e','#0ea5e9'],['#854d0e','#eab308']];
+const sty=i=>({'--a':PAL[i%6][0],'--b':PAL[i%6][1]});
+// Real photos are read from images/<crop>.jpg (e.g. images/rice.jpg, images/red-gram.jpg). If a file is missing the animated illustration is shown instead. Override any crop here: PHOTO.Rice='images/my-rice.jpg'
+const PHOTO={};
+const mem={};
+const store={g(k){try{const v=localStorage.getItem(k);if(v!=null)return JSON.parse(v)}catch(e){}return mem[k]??null},s(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let UNIT='q';
+const rq=v=>'₹'+Math.round(v).toLocaleString('en-IN'),rk=v=>'₹'+(v/100).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}),rs=v=>UNIT=='kg'?rk(v):rq(v); // all prices are stored per quintal; 1 quintal = 100 kg
+const H=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return(h>>>0)%1000};
+const day=()=>Math.floor(Date.now()/864e5);
+const price=(c,mk,d=0)=>Math.round(c.b*(.94+H(c.id+mk)/1000*.12)*(1+(H(c.id+mk+(day()-d))-500)/500*.025)/10)*10;
+const series=(c,mk)=>[6,5,4,3,2,1,0].map(d=>price(c,mk,d));
+const km=(a,b,c,d)=>{const r=x=>x*Math.PI/180,q=Math.sin(r(c-a)/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(r(d-b)/2)**2;return 12742*Math.asin(Math.sqrt(q))};
+const inW=(m,w)=>w[0]<=w[1]?m>=w[0]&&m<=w[1]:m>=w[0]||m<=w[1];
+const seasonNow=()=>{const m=new Date().getMonth()+1;return m>=6&&m<=10?'K':(m>=11||m<=3)?'R':'Z'};
+const getC=id=>CROPS.find(c=>c.id==id);
+const short=n=>n.split(',')[0].split(' (')[0];
+const Ctx=createContext();const useX=()=>useContext(Ctx);
+
+/* ---------- animated crop illustrations (vector art drawn in code) ---------- */
+const ART={Rice:['ear','#d9b64a','#5fa83a'],Wheat:['ear','#e3b94b','#8bb04a'],Barley:['ear','#d8c063','#7fae55'],Jowar:['head','#c2683a','#5fa83a'],Maize:['cob','#f2c230','#5fa83a'],Cotton:['boll','#ffffff','#4f9a3a'],Groundnut:['pod','#c99a62','#4f9a3a'],Soybean:['pod','#8fbf5a','#4f9a3a'],'Red gram':['pod','#7cae4a','#3f8a3a'],'Green gram':['pod','#5f9e3f','#3f8a3a'],Chickpea:['pod','#a8b24a','#4f9a3a'],Lentil:['pod','#b98a4f','#4f9a3a'],Chilli:['chilli','#d62828','#3f8a3a'],Mustard:['flower','#f6c90e','#4f9a3a']};
+function CropArt({id,delay=0}){
+ const [bad,setBad]=useState(false);
+ if(!bad)return html`<img className="pimg" src=${PHOTO[id]||('images/'+id.toLowerCase().replace(/ /g,'-')+'.jpg')} alt=${id} loading="lazy" onError=${()=>setBad(true)}/>`;
+ const [k,c,l]=ART[id]||ART.Rice;
+ const L=html`<path d="M50 100 C34 100 22 88 16 80 C30 84 42 90 50 94Z" fill=${l}/><path d="M50 84 C66 84 78 72 84 64 C70 68 58 74 50 78Z" fill=${l} opacity=".85"/>`;
+ let top;
+ if(k=='ear')top=[...Array(7)].map((_,i)=>{const y=60-i*7;return html`<g key=${i}><ellipse cx="42" cy=${y} rx="5.5" ry="3.3" fill=${c} transform=${`rotate(-28 42 ${y})`}/><ellipse cx="58" cy=${y} rx="5.5" ry="3.3" fill=${c} transform=${`rotate(28 58 ${y})`}/></g>`});
+ else if(k=='head')top=html`<ellipse cx="50" cy="38" rx="15" ry="21" fill=${c}/><ellipse cx="46" cy="32" rx="5" ry="8" fill="#ffffff30"/>`;
+ else if(k=='cob')top=html`<path d="M50 96 C28 86 26 52 43 38 C40 62 44 82 50 96Z" fill=${l}/><path d="M50 96 C72 86 74 52 57 38 C60 62 56 82 50 96Z" fill=${l}/><ellipse cx="50" cy="50" rx="11" ry="26" fill=${c}/><path d="M44 30V70M50 26V74M56 30V70" stroke="#b8860b" strokeWidth="1.6" strokeDasharray="3 3" opacity=".6"/>`;
+ else if(k=='boll')top=html`<path d="M36 50 L50 62 L64 50 L58 42 L42 42Z" fill=${l}/><circle cx="38" cy="38" r="13" fill="#fff" stroke="#d9d9d9"/><circle cx="62" cy="38" r="13" fill="#fff" stroke="#d9d9d9"/><circle cx="50" cy="26" r="13" fill="#fff" stroke="#d9d9d9"/>`;
+ else if(k=='pod')top=[[36,62,-25],[64,50,25],[38,36,-20]].map(([x,y,r],i)=>html`<ellipse key=${i} cx=${x} cy=${y} rx="13" ry="5.5" fill=${c} stroke="#0003" transform=${`rotate(${r} ${x} ${y})`}/>`);
+ else if(k=='chilli')top=html`<path d="M50 34 C26 52 32 92 58 108 C46 84 56 62 60 40Z" fill=${c}/><path d="M56 36 C78 50 74 84 58 100 C66 80 62 62 58 42Z" fill=${c} opacity=".85"/><path d="M44 34 h22 l-4 8 h-14Z" fill=${l}/>`;
+ else top=[[50,30],[41,38],[59,38],[46,22],[54,22],[50,46],[38,48],[62,48]].map(([x,y],i)=>html`<circle key=${i} cx=${x} cy=${y} r="6" fill=${c}/>`);
+ return html`<svg viewBox="0 0 100 120" role="img" aria-label=${id}><g className="sway" style=${{animationDelay:delay+'s'}}><path d="M50 118 C48 90 52 60 50 30" stroke=${l} strokeWidth="3.5" fill="none" strokeLinecap="round"/>${k=='chilli'?null:L}${top}</g></svg>`;
+}
+
+/* ---------- small building blocks ---------- */
+function Num({v}){const [n,setN]=useState(0);useEffect(()=>{let s=null,id;const f=ts=>{s??=ts;const p=Math.min(1,(ts-s)/700);setN(v*p);if(p<1)id=requestAnimationFrame(f)};id=requestAnimationFrame(f);return()=>cancelAnimationFrame(id)},[v]);return rs(n)}
+const Chg=({v})=>html`<span className=${v>=0?'up':'dn'}>${v>=0?'▲ +':'▼ '}${v.toFixed(1)}%</span>`;
+function Bars({items,hi}){const mx=Math.max(...items.map(i=>i[1]));return items.map((x,i)=>html`<div className="br" style=${sty(i)} key=${x[0]}><span>${x[0]}</span><i style=${{width:x[1]/mx*100+'%',outline:x[0]==hi?'3px solid #3730a3':'none'}}></i><b>${rs(x[1])}</b></div>`)}
+function Spark({v,h=70,col='#3730a3'}){const W=300,lo=Math.min(...v),hi=Math.max(...v),y=a=>h-6-(a-lo)/(hi-lo||1)*(h-14),p=v.map((a,i)=>(i*W/(v.length-1)).toFixed(1)+','+y(a).toFixed(1)).join(' ');
+ return html`<svg viewBox=${`0 0 ${W} ${h}`} role="img" aria-label="trend"><polygon points=${`0,${h} ${p} ${W},${h}`} fill=${col} opacity=".15"/><polyline className="dr" pathLength="1" points=${p} fill="none" stroke=${col} strokeWidth="3" strokeLinejoin="round"/></svg>`}
+const Kpi=({i,l,children,s})=>html`<div className="kpi" style=${sty(i)}><small>${l}</small><b>${children}</b><small>${s}</small></div>`;
+function CropSel({label}){const {S,up,t,cn}=useX();return html`<div><label>${t('crop')}</label><select value=${S.crop} onChange=${e=>up({crop:e.target.value})}>${CROPS.map(c=>html`<option key=${c.id} value=${c.id}>${cn(c)}</option>`)}</select></div>`}
+
+/* ---------- pages ---------- */
+function Home(){const {S,up,t,nr,sname}=useX(),n=nr[0];
+ return html`<div className="hero"><h2>${t('hi')}, ${S.user.name} 👋</h2><p>${t('tag')}</p><div className="row">${['Rice','Maize','Cotton','Chilli','Groundnut','Wheat','Mustard'].map((c,i)=>html`<${CropArt} key=${c} id=${c} delay=${i*.3}/>`)}</div></div>
+ <div className="g4">${[['place','📍'],['dash','📊'],['prices','💰'],['adv','💡'],['crops','🌱']].map(([k,e],i)=>html`<button key=${k} className="tile" style=${sty(i)} onClick=${()=>up({pg:k})}><span>${e}</span><b>${t(k)}</b><small>${t('start')}</small></button>`)}</div>
+ <div className="g2"><div className="card" style=${sty(1)}><h3>${t('season')}: ${sname(seasonNow())}</h3><p>${seasonNow()=='K'?t('kd'):t('rd')}</p></div><div className="card"><h3>${t('mkt')}</h3><p><b>${n.m.n}</b>, ${n.m.st} · ${Math.round(n.d)} ${t('km')}</p></div></div>`}
+
+function Dash(){const {S,t,cn,nr,sname,lang}=useX(),c=getC(S.crop),n=nr.slice(0,6),mk=S.mk,d=nr.find(x=>x.m.n==mk).d;
+ const bp=useMemo(()=>n.map(x=>[x.m.n,price(c,x.m.n)]).sort((a,b)=>b[1]-a[1])[0],[S.crop,S.loc]);
+ const list=useMemo(()=>CROPS.filter(x=>seasonNow()=='Z'?x.s=='K':x.s==seasonNow()).map(x=>[cn(x),price(x,mk)]),[mk,lang]);
+ const mv=useMemo(()=>CROPS.map(x=>[x,(price(x,mk)-price(x,mk,1))/price(x,mk,1)*100]).sort((a,b)=>b[1]-a[1]),[mk]);
+ const sr=useMemo(()=>series(c,mk),[S.crop,mk]),ch=(sr[6]-sr[5])/sr[5]*100;
+ return html`<h2>${t('dash')}</h2><p className="sub">${mk}</p>
+ <div className="g4"><${Kpi} i=${0} l=${t('season')} s=${new Date().toLocaleDateString(LOC[lang],{day:'numeric',month:'long',year:'numeric'})}>${sname(seasonNow())}<//><${Kpi} i=${1} l=${t('mkt')} s=${Math.round(d)+' '+t('km')}>${short(mk)}<//><${Kpi} i=${2} l=${t('best')+' · '+cn(c)} s=${short(bp[0])}><${Num} v=${bp[1]}/><//><${Kpi} i=${3} l=${t('tracked')} s=${t('kh')+' + '+t('rb')}>${CROPS.length}<//></div>
+ <div className="fb"><${CropSel}/></div>
+ <div className="g2"><div className="card"><h3>${cn(c)} · ${t('near')} (${t('qt')})</h3><${Bars} items=${n.map(x=>[short(x.m.n),price(c,x.m.n)])} hi=${short(bp[0])}/></div>
+ <div className="card"><h3>${cn(c)} · ${t('trend')}</h3><${Spark} key=${S.crop+mk} v=${sr} h=${120}/><p className="sub">${rs(sr[6])} ${t('qt')} <${Chg} v=${ch}/></p></div>
+ <div className="card"><h3>${t('mod')} · ${short(mk)}</h3><${Bars} items=${list}/></div>
+ <div className="card"><h3>${t('movers')}</h3>${[...mv.slice(0,3),...mv.slice(-3)].map(([x,v])=>html`<div className="mk" key=${x.id}><span>${x.e} ${cn(x)}</span><${Chg} v=${v}/></div>`)}</div></div><div className="note">${t('sample')}</div>`}
+
+function Place(){const {S,up,t,cn,nr,lang}=useX(),n=nr.slice(0,6),c=getC(S.crop);
+ const locate=()=>{if(!navigator.geolocation)return up({msg:'locfail'});navigator.geolocation.getCurrentPosition(p=>{const loc=[p.coords.latitude,p.coords.longitude],b=MKS.map(m=>[m,km(loc[0],loc[1],m.la,m.lo)]).sort((a,b)=>a[1]-b[1])[0][0];up({loc,mk:b.n,msg:'locok'})},()=>up({msg:'locfail'}),{timeout:8000})};
+ const ps=[S.loc,...n.map(x=>[x.m.la,x.m.lo])],la=ps.map(p=>p[0]),lo=ps.map(p=>p[1]),a=Math.min(...la),b=Math.max(...la),l=Math.min(...lo),r=Math.max(...lo),X=v=>30+(v-l)/((r-l)||1)*340,Y=v=>270-(v-a)/((b-a)||1)*240;
+ return html`<h2>${t('place')}</h2><p className="sub">${t(S.msg)}${n[0].d>300?' '+t('far'):''}</p>
+ <div className="fb"><button className="btn g" onClick=${locate}>${t('useloc')}</button><div><label>${t('pick')}</label><select value="" onChange=${e=>{const m=MKS.find(x=>x.n==e.target.value);if(m)up({loc:[m.la,m.lo],mk:m.n,msg:'locok'})}}><option value="">—</option>${MKS.map(m=>html`<option key=${m.n}>${m.n}</option>`)}</select></div><${CropSel}/></div>
+ <div className="g2"><div className="card"><h3>${t('near')}</h3><svg viewBox="0 0 400 300" role="img" aria-label="map"><rect width="400" height="300" rx="14" fill="#0c4a6e" opacity=".08"/>${n.map((x,i)=>html`<g key=${x.m.n}><circle cx=${X(x.m.lo)} cy=${Y(x.m.la)} r="10" fill=${PAL[i%6][0]}><title>${x.m.n}</title></circle><text x=${X(x.m.lo)+13} y=${Y(x.m.la)+4} fontSize="11" fill="currentColor">${short(x.m.n)}</text></g>`)}<circle cx=${X(S.loc[1])} cy=${Y(S.loc[0])} r="8" fill="#be123c" stroke="#fff" strokeWidth="3"><animate attributeName="r" values="8;13;8" dur="2s" repeatCount="indefinite"/></circle></svg></div>
+ <div className="card"><h3>${cn(c)} · ${t('qt')}</h3>${n.map(x=>html`<div className="mk" key=${x.m.n}><div><b>${x.m.n}</b><br/><small>${x.m.st} · ${Math.round(x.d)} ${t('km')}</small></div><div style=${{textAlign:'right'}}><b>${rs(price(c,x.m.n))}</b> <small>${t('qt')}</small><br/><small>${UNIT=='kg'?rq(price(c,x.m.n))+' '+T[lang].qt:rk(price(c,x.m.n))+' '+T[lang].kg}</small><br/><a href="#" onClick=${e=>{e.preventDefault();up({mk:x.m.n,pg:'prices'})}}>${t('viewp')}</a></div></div>`)}</div></div>`}
+
+function Prices(){const {S,up,t,cn,nr,sname,lang}=useX(),rows=useMemo(()=>CROPS.filter(c=>S.sea=='All'||c.s==S.sea).map(c=>{const s=series(c,S.mk);return{c,p:s[6],s,ch:(s[6]-s[5])/s[5]*100}}),[S.mk,S.sea]);
+ return html`<h2>${t('prices')}</h2><p className="sub">${t('mod')} · ${new Date().toLocaleDateString(LOC[lang],{day:'numeric',month:'long',year:'numeric'})}</p>
+ <div className="fb"><div><label>${t('mktL')}</label><select value=${S.mk} onChange=${e=>up({mk:e.target.value})}>${nr.map(x=>html`<option key=${x.m.n} value=${x.m.n}>${x.m.n} (${Math.round(x.d)} ${t('km')})</option>`)}</select></div><div><label>${t('season')}</label><select value=${S.sea} onChange=${e=>up({sea:e.target.value})}>${[['All',t('all')],['K',t('kh')],['R',t('rb')]].map(o=>html`<option key=${o[0]} value=${o[0]}>${o[1]}</option>`)}</select></div></div>
+ <div className="card tw"><table><thead><tr><th>${t('crop')}</th><th></th><th>₹ ${T[lang].qt}</th><th>₹ ${T[lang].kg}</th><th>${t('lo')}–${t('hg')}</th><th>${t('chg')}</th><th>${t('trend')}</th></tr></thead><tbody>${rows.map(({c,p,s,ch})=>html`<tr key=${c.id}><td>${c.e} <b>${cn(c)}</b> <small title=${VER.includes(c.id)?'Base level from mandi reports, Aug–Sep 2026':'Rough estimate'}>${VER.includes(c.id)?'✓':'≈'}</small></td><td><span className=${'tag '+c.s.toLowerCase()}>${sname(c.s)}</span></td><td><b>${rq(p)}</b></td><td><b>${rk(p)}</b></td><td>${rs(Math.min(...s)*.98)} – ${rs(Math.max(...s)*1.02)}</td><td><${Chg} v=${ch}/></td><td style=${{width:'9rem'}}><${Spark} v=${s} h=${36} col="#0f766e"/></td></tr>`)}</tbody></table></div>
+ <div className="note">${t('sample')}<br/>✓ = base level from published mandi reports (Aug–Sep 2026; chilli = Guntur average, cotton = all-India average, others = state or national averages). ≈ = rough estimate, not verified. Low–High is the indicative 7-day band, shown in the unit chosen at the top. ${t('conv')}: for example ₹17,750 per quintal = ₹177.50 per kg.</div>`}
+
+function Advisory(){const {t,cn,nr,sname,lang}=useX(),m=new Date().getMonth()+1,m2=m%12+1,ns=nr.slice(0,6),mnm=x=>new Date(2024,x-1,1).toLocaleString(LOC[lang],{month:'short'});
+ const hv=CROPS.filter(c=>inW(m,c.har)||inW(m2,c.har)),sw=CROPS.filter(c=>inW(m,c.sow)||inW(m2,c.sow)),win=w=>mnm(w[0])+(w[1]!=w[0]?'–'+mnm(w[1]):'');
+ const chip=(c,w,i)=>html`<span key=${c.id} className="chip" style=${sty(i)}>${c.e} ${cn(c)} · ${win(w)}</span>`;
+ const sl=[...hv,...sw].filter((c,i,a)=>a.indexOf(c)==i).slice(0,4).map(c=>{const b=ns.map(x=>[x,price(c,x.m.n)]).sort((p,q)=>q[1]-p[1])[0];return html`<div className="mk" key=${c.id}><span>${c.e} <b>${cn(c)}</b></span><span>${rs(b[1])} ${t('qt')} ${t('at')} ${b[0].m.n} · ${Math.round(b[0].d)} ${t('km')}</span></div>`});
+ return html`<h2>${t('adv')}</h2><p className="sub">${t('season')}: ${sname(seasonNow())} · ${mnm(m)}</p><div className="g2">
+ <div className="card"><h3>🚜 ${t('hv')}</h3><div className="chips">${hv.length?hv.map((c,i)=>chip(c,c.har,i)):t('none')}</div></div>
+ <div className="card"><h3>🌱 ${t('sn')}</h3><div className="chips">${sw.length?sw.map((c,i)=>chip(c,c.sow,i+2)):t('none')}</div></div>
+ <div className="card"><h3>💰 ${t('sell')}</h3>${sl.length?sl:t('none')}</div>
+ <div className="card"><h3>✅ ${t('tips')}</h3><p>${['t1','t2','t3','t4'].map(k=>html`<span key=${k}>• ${t(k)}<br/></span>`)}</p></div></div><div className="note">${t('sample')}</div>`}
+
+function Crops(){const {t,cn,nr,sname,lang}=useX(),mk=nr[0].m.n,mnm=x=>new Date(2024,x-1,1).toLocaleString(LOC[lang],{month:'short'}),win=w=>mnm(w[0])+(w[1]!=w[0]?'–'+mnm(w[1]):'');
+ return html`<div>${['K','R'].map((s,j)=>html`<div key=${s}><h2 style=${{marginTop:'1rem'}}>${j?'❄️':'🌧️'} ${sname(s)}</h2><p className="sub">${t(s=='K'?'kd':'rd')}</p><div className="g4">${CROPS.filter(c=>c.s==s).map((c,i)=>html`<div className="kpi cc" key=${c.id} style=${sty(j*3+i)}><${CropArt} id=${c.id} delay=${i*.25}/><b>${cn(c)}</b><small>${t('sow')}: ${win(c.sow)}<br/>${t('har')}: ${win(c.har)}</small><small>${rs(price(c,mk))} ${t('qt')}</small></div>`)}</div></div>`)}
+ <div className="note">${t('sample')} Sowing and harvest windows are typical for Telangana and Andhra Pradesh; check local advice for your district. Crop pictures come from the images folder; where a photo is missing an illustration is shown.</div></div>`}
+
+/* ---------- login, language, shell ---------- */
+async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(s)}}
+function Auth({onDone}){const [reg,setReg]=useState(false),[f,setF]=useState({nm:'',ph:'',pw:''}),[er,setEr]=useState(''),set=k=>e=>setF({...f,[k]:e.target.value});
+ const go=async()=>{const us=store.g('agri_users')||{},ph=f.ph.trim();if(!/^\d{10}$/.test(ph)||f.pw.length<6)return setEr('Enter a 10-digit phone number and a password of 6+ characters.');const h=await sha(f.pw);
+  if(reg){if(!f.nm.trim())return setEr('Enter your name.');if(us[ph])return setEr('This phone number is already registered. Please login.');us[ph]={name:f.nm.trim(),h};store.s('agri_users',us);onDone({name:f.nm.trim(),ph})}
+  else{if(!us[ph]||us[ph].h!=h)return setEr('Phone number or password is incorrect.');onDone({name:us[ph].name,ph})}};
+ return html`<section className="scr"><div className="brand"><h1>AgriMarket</h1><p>Nearby market prices, seasonal crop guidance and advisories for farmers.</p><div className="row">${['Rice','Maize','Cotton','Chilli','Groundnut'].map((c,i)=>html`<${CropArt} key=${c} id=${c} delay=${i*.3}/>`)}</div></div>
+ <div className="box"><div className="tabs"><button className=${reg?'':'on'} onClick=${()=>{setReg(false);setEr('')}}>Login</button><button className=${reg?'on':''} onClick=${()=>{setReg(true);setEr('')}}>Register</button></div>
+ ${reg&&html`<label htmlFor="nm">Full name</label><input id="nm" value=${f.nm} onChange=${set('nm')} autoComplete="name"/>`}
+ <label htmlFor="ph">Phone number (10 digits)</label><input id="ph" inputMode="numeric" maxLength="10" value=${f.ph} onChange=${set('ph')} autoComplete="tel"/>
+ <label htmlFor="pw">Password (6+ characters)</label><input id="pw" type="password" value=${f.pw} onChange=${set('pw')} autoComplete=${reg?'new-password':'current-password'}/>
+ <div className="err" role="alert">${er}</div><button className="btn" onClick=${go}>${reg?'Create account':'Login'}</button>
+ <p className="sub" style=${{fontSize:'.8rem',marginTop:'1rem'}}>Demo: accounts are stored only in this browser. A real deployment needs a secure backend.</p></div></section>`}
+function LangPick({lang,onDone}){const [l,setL]=useState(lang);
+ return html`<section className="scr"><div className="brand"><div style=${{fontSize:'3rem'}}>🌐</div><h1>Choose language<br/>భాషను ఎంచుకోండి<br/>भाषा चुनें</h1></div><div className="box"><div className="lg">${[['en','English','English'],['te','తెలుగు','Telugu'],['hi','हिन्दी','Hindi']].map(o=>html`<button key=${o[0]} className=${o[0]==l?'on':''} onClick=${()=>setL(o[0])}>${o[1]}<small>${o[2]}</small></button>`)}</div><button className="btn g" onClick=${()=>onDone(l)}>Continue · కొనసాగించండి · आगे बढ़ें</button></div></section>`}
+
+function App(){
+ const [S,setS]=useState(()=>{const u=store.g('agri_sess');return{stage:u?'app':'auth',user:u,lang:store.g('agri_lang')||'en',pg:'home',unit:store.g('agri_unit')||'q',loc:[MKS[0].la,MKS[0].lo],mk:MKS[0].n,crop:'Rice',sea:'All',msg:'locdef'}});
+ const up=p=>setS(s=>({...s,...p})),lang=S.lang;
+ UNIT=S.unit;
+ const t=k=>k=='qt'&&S.unit=='kg'?T[lang].kg:(T[lang][k]??T.en[k]),cn=c=>lang=='en'?c.id:c.n[lang=='te'?0:1],sname=s=>s=='K'?t('kh'):s=='R'?t('rb'):t('zd');
+ const nr=useMemo(()=>MKS.map(m=>({m,d:km(S.loc[0],S.loc[1],m.la,m.lo)})).sort((a,b)=>a.d-b.d),[S.loc]);
+ useEffect(()=>{document.documentElement.lang=lang},[lang]);
+ useEffect(()=>{scrollTo(0,0)},[S.pg]);
+ if(S.stage=='auth')return html`<${Auth} onDone=${u=>{store.s('agri_sess',u);up({user:u,stage:'lang'})}}/>`;
+ if(S.stage=='lang')return html`<${LangPick} lang=${lang} onDone=${l=>{store.s('agri_lang',l);up({lang:l,stage:'app',pg:'home'})}}/>`;
+ const PG={home:Home,dash:Dash,place:Place,prices:Prices,adv:Advisory,crops:Crops}[S.pg]||Home;
+ return html`<${Ctx.Provider} value=${{S,up,t,cn,sname,nr,lang}}><header><span className="logo">🌾 AgriMarket</span>${['home','place','dash','prices','adv','crops'].map(k=>html`<a key=${k} tabIndex="0" className=${k==S.pg?'on':''} onClick=${()=>up({pg:k})} onKeyDown=${e=>e.key=='Enter'&&up({pg:k})}>${t(k)}</a>`)}
+ <div className="seg" role="group" aria-label="Unit"><button className=${S.unit=='q'?'on':''} onClick=${()=>{store.s('agri_unit','q');up({unit:'q'})}}>${t('uq')}</button><button className=${S.unit=='kg'?'on':''} onClick=${()=>{store.s('agri_unit','kg');up({unit:'kg'})}}>${t('uk')}</button></div><select aria-label="Language" value=${lang} onChange=${e=>{store.s('agri_lang',e.target.value);up({lang:e.target.value})}}><option value="en">English</option><option value="te">తెలుగు</option><option value="hi">हिन्दी</option></select><button className="btn o" onClick=${()=>{store.s('agri_sess',null);up({stage:'auth',user:null})}}>${t('out')}</button></header>
+ <main><${PG} key=${S.pg+lang}/></main><footer>© AgriMarket · Indicative prices for guidance only, not live market rates. Consult your local KVK or agriculture officer before decisions.</footer><//>`}
+ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
+</script></body></html>
